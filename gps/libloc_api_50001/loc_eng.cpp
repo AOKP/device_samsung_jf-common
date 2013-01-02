@@ -46,6 +46,7 @@
 
 #include "LocApiAdapter.h"
 
+#include <cutils/properties.h>
 #include <cutils/sched_policy.h>
 #include <utils/SystemClock.h>
 #include <utils/Log.h>
@@ -2297,7 +2298,7 @@ DESCRIPTION
    Sets the privacy lock setting (1. GPS on, 0. GPS off).
 
 DEPENDENCIES
-   None
+   ro.gps.set_privacy system property must be "1" to set privacy lock.
 
 RETURN VALUE
    0: success
@@ -2309,12 +2310,25 @@ SIDE EFFECTS
 static int loc_eng_set_privacy(loc_eng_data_s_type &loc_eng_data,
                                int8_t privacy_setting)
 {
+    static const char SET_PRIVACY_PROP[] = "ro.gps.set_privacy";
+    char value[PROPERTY_VALUE_MAX];
+
     ENTRY_LOG();
     INIT_CHECK(loc_eng_data.context, return -1);
-    loc_eng_msg_privacy *msg(
-        new loc_eng_msg_privacy(&loc_eng_data, privacy_setting));
-    msg_q_snd((void*)((LocEngContext*)(loc_eng_data.context))->deferred_q,
-              msg, loc_eng_free_msg);
+    property_get(SET_PRIVACY_PROP, value, "");
+
+    if (strcmp(value, "1") == 0) {
+        LOC_LOGD("%s: Dispatch setPrivacy, privacy_setting=%d.\n", __func__,
+                 privacy_setting);
+
+        loc_eng_msg_privacy *msg(
+            new loc_eng_msg_privacy(&loc_eng_data, privacy_setting));
+        msg_q_snd((void*)((LocEngContext*)(loc_eng_data.context))->deferred_q,
+                  msg, loc_eng_free_msg);
+    } else {
+        LOC_LOGD("%s: Drop setPrivacy, %s=\"%s\" != \"1\".\n", __func__,
+                 SET_PRIVACY_PROP, value);
+    }
 
     EXIT_LOG(%d, 0);
     return 0;
