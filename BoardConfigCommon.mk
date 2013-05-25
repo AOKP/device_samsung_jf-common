@@ -32,6 +32,8 @@ TARGET_SPECIFIC_HEADER_PATH := device/samsung/jf-common/include
 
 # Kernel
 TARGET_KERNEL_SOURCE        := kernel/samsung/jf
+TARGET_KERNEL_VARIANT_CONFIG := cyanogen_jf_defconfig
+TARGET_KERNEL_SELINUX_CONFIG := jfselinux_defconfig
 BOARD_KERNEL_CMDLINE        := androidboot.hardware=qcom user_debug=31 zcache
 BOARD_KERNEL_BASE           := 0x80200000
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
