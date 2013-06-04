@@ -28,4 +28,5 @@
     <bool name="wantsFocusModes">true</bool>
     <bool name="ignorePreferredPreviewSizeForVideo">true</bool>
     <bool name="sendMagicSamsungZSLCommand">true</bool>
+    <bool name="enableAspectRatioFixes">true</bool>
 </resources>
