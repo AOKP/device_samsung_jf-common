@@ -80,3 +80,5 @@ BOARD_HAVE_AUDIENCE_ES325_2MIC := true
 # Samsung's nonstandard csd-client
 BOARD_HAVE_SAMSUNG_CSDCLIENT := true
 
+# Requires aspect ratio fixes for front facing camera
+TARGET_REQUIRES_ASPECT_RATIO_FIX := true
