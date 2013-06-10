@@ -18,6 +18,7 @@
 //#define LOG_NDEBUG 0
 #define LOG_TAG "lights"
 #include <cutils/log.h>
+#include <cutils/properties.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -27,6 +28,10 @@
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <hardware/lights.h>
+
+#ifndef LIBLIGHTS_SUPPORT_CHARGING_LED
+#define LIBLIGHTS_SUPPORT_CHARGING_LED 1
+#endif
 
 static pthread_once_t g_init = PTHREAD_ONCE_INIT;
 static pthread_mutex_t g_lock = PTHREAD_MUTEX_INITIALIZER;
@@ -241,6 +246,8 @@ static int set_light_leds(struct light_state_t const *state, int type)
     }
 
     led->color = state->color & 0x00ffffff;
+    if (led->color == 0x00ffffff)
+        led->color = 0x80ff80;
 
     if (led->color > 0) {
         /* This LED is lit. */
@@ -276,6 +283,15 @@ switched:
 static int set_light_leds_battery(struct light_device_t *dev,
             struct light_state_t const *state)
 {
+    char blink[32];
+    int brightness = rgb_to_brightness(state);
+
+    if (brightness == 0) {
+        snprintf(blink, sizeof(blink)-1, "0x000000 0 0");
+    } else {
+        snprintf(blink, sizeof(blink)-1, "0x%06x %d %d", state->flashOnMS, state->flashOffMS);
+        ALOGD("set_light_battery 0x%06x %d %d", state->flashOnMS, state->flashOffMS);
+    }
     return set_light_leds(state, 0);
 }
 
@@ -320,12 +336,21 @@ static int open_lights(const struct hw_module_t *module, char const *name,
         set_light = set_light_backlight;
     else if (0 == strcmp(LIGHT_ID_BUTTONS, name))
         set_light = set_light_buttons;
-    else if (0 == strcmp(LIGHT_ID_BATTERY, name))
-        set_light = set_light_leds_battery;
     else if (0 == strcmp(LIGHT_ID_NOTIFICATIONS, name))
         set_light = set_light_leds_notifications;
     else if (0 == strcmp(LIGHT_ID_ATTENTION, name))
         set_light = set_light_leds_attention;
+#if LIBLIGHTS_SUPPORT_CHARGING_LED
+    else if (0 == strcmp(LIGHT_ID_BATTERY, name)) {
+        char value[PROPERTY_VALUE_MAX];
+        property_get("persist.sys.enable-charging-led", value, "0");
+        int enable_charging_led = atoi(value);
+        if (enable_charging_led == 1)
+            set_light = set_light_leds_battery;
+        else
+            return -EINVAL;
+    }
+#endif
     else
         return -EINVAL;
 
