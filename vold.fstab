@@ -15,6 +15,11 @@
 # internal sdcard
 #dev_mount emmc /mnt/emmc 28 /devices/platform/msm_sdcc.1/mmc_host/mmc0/mmc0
 
+#storage struct = series, "/mnt/sdcard/extStorages"
+#storage struct = parallel
+{
+ supported_exfat = yes
+}
 # external sdcard
 dev_mount sdcard /storage/sdcard1 auto /devices/platform/msm_sdcc.4/mmc_host/mmc2/ /devices/platform/msm_sdcc.2/mmc_host/mmc2/
 
