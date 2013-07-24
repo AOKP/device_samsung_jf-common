@@ -31,5 +31,4 @@ fi
 
 echo '[*] Unknown bootloader version detected.'
 echo '[*] Not flashing boot.img to this device.'
-
 exit 0
