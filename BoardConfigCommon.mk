@@ -114,10 +114,4 @@ BOARD_SEPOLICY_UNION += \
 	thermald.te \
 	ueventd.te \
 	wpa_supplicant.te
-<<<<<<< HEAD
-endif
 
-# Use retire fence from MDP driver
-TARGET_DISPLAY_USE_RETIRE_FENCE := true
-=======
->>>>>>> 39130b5... jf: Underp policy
