@@ -83,7 +83,6 @@ BOARD_USES_SEPERATED_VOIP := true
 BOARD_USES_SEPERATED_HEADSET_MIC := true
 
 # SELinux
-ifeq ($(HAVE_SELINUX),true)
 BOARD_SEPOLICY_DIRS += \
         device/samsung/jf/sepolicy
 
@@ -115,7 +114,10 @@ BOARD_SEPOLICY_UNION += \
 	thermald.te \
 	ueventd.te \
 	wpa_supplicant.te
+<<<<<<< HEAD
 endif
 
 # Use retire fence from MDP driver
 TARGET_DISPLAY_USE_RETIRE_FENCE := true
+=======
+>>>>>>> 39130b5... jf: Underp policy
