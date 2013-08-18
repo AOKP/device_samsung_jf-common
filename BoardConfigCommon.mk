@@ -84,12 +84,13 @@ BOARD_USES_SEPERATED_HEADSET_MIC := true
 
 # SELinux
 BOARD_SEPOLICY_DIRS += \
-        device/samsung/jf/sepolicy
+        device/samsung/jf-common/sepolicy
 
 BOARD_SEPOLICY_UNION += \
 	file_contexts \
 	property_contexts \
 	te_macros \
+        bluetooth_loader.te \
 	bridge.te \
 	camera.te \
 	conn_init.te \
