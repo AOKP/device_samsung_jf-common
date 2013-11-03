@@ -87,6 +87,9 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 # VectorImpl Symbols required for legacy HALs
 COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 
+# Time services
+BOARD_USES_QC_TIME_SERVICES := true
+
 # SELinux
 TARGET_USE_SELINUX := false
 ifneq ($(TARGET_USE_SELINUX),false)
