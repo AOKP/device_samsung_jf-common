@@ -82,6 +82,8 @@ BOARD_USES_SEPERATED_VOIP := true
 BOARD_USES_SEPERATED_HEADSET_MIC := true
 
 # SELinux
+TARGET_USE_SELINUX := false
+ifneq ($(TARGET_USE_SELINUX),false)
 BOARD_SEPOLICY_DIRS += \
         device/samsung/jf-common/sepolicy
 
@@ -114,4 +116,4 @@ BOARD_SEPOLICY_UNION += \
 	thermald.te \
 	ueventd.te \
 	wpa_supplicant.te
-
+endif
