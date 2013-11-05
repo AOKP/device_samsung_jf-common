@@ -108,9 +108,6 @@ PRODUCT_PACKAGES += lights.msm8960
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.enable-charging-led=0
 
-# Irda
-PRODUCT_PACKAGES += irda.msm8960
-
 # QC Perf
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=/system/lib/libqc-opt.so
