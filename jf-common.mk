@@ -71,6 +71,7 @@ PRODUCT_PACKAGES += \
     init.carrier.rc \
     init.qcom.rc \
     init.qcom.usb.rc \
+	init.ril.rc \
     init.target.rc \
     ueventd.qcom.rc
 
