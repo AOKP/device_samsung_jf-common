@@ -84,6 +84,9 @@ BOARD_USES_SEPERATED_HEADSET_MIC := true
 # Use device specific camera
 USE_DEVICE_SPECIFIC_CAMERA := true
 
+# VectorImpl Symbols required for legacy HALs
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
+
 # SELinux
 TARGET_USE_SELINUX := false
 ifneq ($(TARGET_USE_SELINUX),false)
