@@ -92,16 +92,3 @@ COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 
 # Time services
 BOARD_USES_QC_TIME_SERVICES := true
-
-# SELinux
-TARGET_USE_SELINUX := false
-ifneq ($(TARGET_USE_SELINUX),false)
-BOARD_SEPOLICY_DIRS += \
-        device/samsung/jf-common/sepolicy
-
-# The list below is order dependent
-BOARD_SEPOLICY_UNION := \
-       device.te \
-       app.te \
-       file_contexts
-endif
