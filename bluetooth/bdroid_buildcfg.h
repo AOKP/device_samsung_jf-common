@@ -22,4 +22,7 @@
 // Enables Interleave scan
 #define BTA_HOST_INTERLEAVE_SEARCH TRUE
 
+#define BTA_SKIP_BLE_READ_REMOTE_FEAT TRUE
+#define BTA_DISABLE_DELAY 1000 /* in milliseconds */
+
 #endif
