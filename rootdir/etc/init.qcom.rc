@@ -367,7 +367,7 @@ on property:ro.use_data_netmgrd=false
 #netmgr not supported on specific target
     stop netmgrd
 
-# Adjust socket buffer to enlarge TCP receive window for high bandwidth
+# Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
 # but only if ro.data.large_tcp_window_size property is set.
 on property:ro.data.large_tcp_window_size=true
     write /proc/sys/net/ipv4/tcp_adv_win_scale  1
@@ -570,10 +570,6 @@ service ims_regmanager /system/bin/exe-ims-regmanagerprocessnative
 
 on property:persist.ims.regmanager.mode=1
     start ims_regmanager
-
-on property:ro.data.large_tcp_window_size=true
-    # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
-    write /proc/sys/net/ipv4/tcp_adv_win_scale  1
 
 service ril-daemon /system/bin/rild
     class main
