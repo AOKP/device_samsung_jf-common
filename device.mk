@@ -17,10 +17,10 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 ## Get non-open-source specific aspects
-$(call inherit-product, vendor/samsung/jf-common/jf-common-vendor.mk)
+$(call inherit-product, vendor/samsung/jf/jf-vendor.mk)
 
 ## overlays
-DEVICE_PACKAGE_OVERLAYS += device/samsung/jf-common/overlay
+DEVICE_PACKAGE_OVERLAYS += device/samsung/jf/overlay
 
 # Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi xxhdpi
@@ -32,36 +32,44 @@ TARGET_SCREEN_WIDTH := 1080
 
 # Audio configuration
 PRODUCT_COPY_FILES += \
-    device/samsung/jf-common/audio/snd_soc_msm_2x_Fusion3:system/etc/snd_soc_msm/snd_soc_msm_2x_Fusion3 \
-    device/samsung/jf-common/audio/audio_policy.conf:system/etc/audio_policy.conf \
+    device/samsung/jf/audio/snd_soc_msm_2x_Fusion3:system/etc/snd_soc_msm/snd_soc_msm_2x_Fusion3 \
+    device/samsung/jf/audio/audio_policy.conf:system/etc/audio_policy.conf \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml
 
 # Media Profile
 PRODUCT_COPY_FILES += \
-    device/samsung/jf-common/media/media_profiles.xml:system/etc/media_profiles.xml
+    device/samsung/jf/media/media_profiles.xml:system/etc/media_profiles.xml
 
 # GPS
 PRODUCT_PACKAGES += \
     gps.msm8960
 
 ifeq ($(NEEDS_GPS_MSB_DISABLED),true)
-    GPS_CONF := device/samsung/jf-common/gps/gps-nomsb.conf
+    GPS_CONF := device/samsung/jf/gps/gps-nomsb.conf
 else
-    GPS_CONF := device/samsung/jf-common/gps/gps.conf
+    GPS_CONF := device/samsung/jf/gps/gps.conf
 endif
 
 PRODUCT_COPY_FILES += \
     $(GPS_CONF):/system/etc/gps.conf
 
+# loki
+PRODUCT_PACKAGES += \
+    loki.sh \
+    loki_flash \
+    loki_patch \
+    loki_bootloaders \
+    unlocked_bootloaders
+
 # Keylayouts
 PRODUCT_COPY_FILES += \
-    device/samsung/jf-common/keylayout/atmel_mxt_ts.kl:system/usr/keylayout/atmel_mxt_ts.kl \
-    device/samsung/jf-common/keylayout/Button_Jack.kl:system/usr/keylayout/Button_Jack.kl \
-    device/samsung/jf-common/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
-    device/samsung/jf-common/keylayout/philips_remote_ir.kl:system/usr/keylayout/philips_remote_ir.kl \
-    device/samsung/jf-common/keylayout/samsung_remote_ir.kl:system/usr/keylayout/samsung_remote_ir.kl \
-    device/samsung/jf-common/keylayout/sec_touchkey.kl:system/usr/keylayout/sec_touchkey.kl \
-    device/samsung/jf-common/keylayout/ue_rf4ce_remote.kl:system/usr/keylayout/ue_rf4ce_remote.kl
+    device/samsung/jf/keylayout/atmel_mxt_ts.kl:system/usr/keylayout/atmel_mxt_ts.kl \
+    device/samsung/jf/keylayout/Button_Jack.kl:system/usr/keylayout/Button_Jack.kl \
+    device/samsung/jf/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
+    device/samsung/jf/keylayout/philips_remote_ir.kl:system/usr/keylayout/philips_remote_ir.kl \
+    device/samsung/jf/keylayout/samsung_remote_ir.kl:system/usr/keylayout/samsung_remote_ir.kl \
+    device/samsung/jf/keylayout/sec_touchkey.kl:system/usr/keylayout/sec_touchkey.kl \
+    device/samsung/jf/keylayout/ue_rf4ce_remote.kl:system/usr/keylayout/ue_rf4ce_remote.kl
 
 # Ramdisk
 PRODUCT_PACKAGES += \
@@ -103,10 +111,10 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.consumerir.xml:system/etc/permissions/android.hardware.consumerir.xml
 
 # NFCEE access control + configuration
-NFCEE_ACCESS_PATH := device/samsung/jf-common/nfc/nfcee_access.xml
+NFCEE_ACCESS_PATH := device/samsung/jf/nfc/nfcee_access.xml
 PRODUCT_COPY_FILES += \
     $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
-    device/samsung/jf-common/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf
+    device/samsung/jf/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf
 
 # Sensors
 PRODUCT_COPY_FILES += \
@@ -134,7 +142,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += qrngd
 
 # Prepatch to fix BT/WiFi bus lockups
-PRODUCT_COPY_FILES += device/samsung/jf-common/bluetooth/bcm4335_prepatch.hcd:system/vendor/firmware/bcm4335_prepatch.hcd
+PRODUCT_COPY_FILES += device/samsung/jf/bluetooth/bcm4335_prepatch.hcd:system/vendor/firmware/bcm4335_prepatch.hcd
 
 #common build.props
 PRODUCT_PROPERTY_OVERRIDES += \

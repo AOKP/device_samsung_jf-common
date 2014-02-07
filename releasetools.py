@@ -1,5 +1,6 @@
 # Copyright (C) 2012 The Android Open Source Project
 # Copyright (C) 2013 The CyanogenMod Project
+# Copyright (C) 2014 The Android Open Kang Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,14 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-#
-#
 # This leverages the loki_patch utility created by djrbliss which allows us
 # to bypass the bootloader checks on jfltevzw and jflteatt
 # See here for more information on loki: https://github.com/djrbliss/loki
 #
 
-"""Custom OTA commands for jf devices with locked bootloaders"""
+"""Custom OTA commands for Samsung jf devices"""
 
 def FullOTA_InstallEnd(info):
   info.script.script = [cmd for cmd in info.script.script if not "boot.img" in cmd]
@@ -30,3 +29,8 @@ def FullOTA_InstallEnd(info):
   info.script.AppendExtra('delete("/system/bin/loki.sh");')
   info.script.AppendExtra('delete("/system/etc/loki_bootloaders");')
   info.script.AppendExtra('delete("/system/etc/unlocked_bootloaders");')
+  info.script.AppendExtra('ifelse(is_substring("L720", getprop("ro.bootloader")), run_program("/sbin/sh", "-c", "busybox cp -R /system/proprietary/spr/* /system/"));')
+  info.script.AppendExtra('ifelse(is_substring("M919", getprop("ro.bootloader")), run_program("/sbin/sh", "-c", "busybox cp -R /system/proprietary/tmo/* /system/"));')
+  info.script.AppendExtra('ifelse(is_substring("R970", getprop("ro.bootloader")), run_program("/sbin/sh", "-c", "busybox cp -R /system/proprietary/usc/* /system/"));')
+  info.script.AppendExtra('ifelse(is_substring("I545", getprop("ro.bootloader")), run_program("/sbin/sh", "-c", "busybox cp -R /system/proprietary/vzw/* /system/"));')
+  info.script.AppendExtra('delete_recursive("/system/proprietary");')
