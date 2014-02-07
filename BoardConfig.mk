@@ -23,7 +23,17 @@
 # inherit from common msm8960
 -include device/samsung/msm8960-common/BoardConfigCommon.mk
 
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/jf-common/include
+TARGET_SPECIFIC_HEADER_PATH := device/samsung/jf/include
+
+# Vendor init
+TARGET_UNIFIED_DEVICE := true
+TARGET_LIBINIT_DEFINES_FILE := device/samsung/jf/init/init_jf.c
+
+# Allow our d2's
+TARGET_OTA_ASSERT_DEVICE := jfltecri,jfltecsp,jfltespr,jfltetmo,jflteusc,jfltevzw
+
+# Custom releasetools
+TARGET_RELEASETOOLS_EXTENSIONS := device/samsung/jf
 
 # Kernel
 TARGET_KERNEL_SOURCE         := kernel/samsung/jf
@@ -31,6 +41,7 @@ BOARD_KERNEL_CMDLINE         := androidboot.hardware=qcom user_debug=31 zcache m
 BOARD_KERNEL_BASE            := 0x80200000
 BOARD_MKBOOTIMG_ARGS         := --ramdisk_offset 0x02000000
 BOARD_KERNEL_PAGESIZE        := 2048
+TARGET_KERNEL_CONFIG         := jf_eur_defconfig
 TARGET_KERNEL_VARIANT_CONFIG := cyanogen_jf_defconfig
 TARGET_KERNEL_SELINUX_CONFIG := jfselinux_defconfig
 
@@ -46,16 +57,16 @@ TARGET_USES_QCOM_BSP := true
 COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DQCOM_BSP
 
 # Adreno configuration
-BOARD_EGL_CFG := device/samsung/jf-common/configs/egl.cfg
+BOARD_EGL_CFG := device/samsung/jf/configs/egl.cfg
 
 # Recovery
-BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/jf-common/recovery/recovery_keys.c
+BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/jf/recovery/recovery_keys.c
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 BOARD_USES_MMCUTILS := true
 BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_HAS_NO_MISC_PARTITION := true
 BOARD_HAS_NO_SELECT_BUTTON := true
-TARGET_RECOVERY_FSTAB := device/samsung/jf-common/rootdir/etc/fstab.qcom
+TARGET_RECOVERY_FSTAB := device/samsung/jf/rootdir/etc/fstab.qcom
 
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x00A00000
@@ -65,8 +76,8 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 28651290624
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 # bluetooth
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/jf-common/bluetooth
-BOARD_BLUEDROID_VENDOR_CONF := device/samsung/jf-common/bluetooth/vnd_jf.txt
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/jf/bluetooth
+BOARD_BLUEDROID_VENDOR_CONF := device/samsung/jf/bluetooth/vnd_jf.txt
 BOARD_BLUETOOTH_USES_HCIATTACH_PROPERTY := false
 
 # Adreno
